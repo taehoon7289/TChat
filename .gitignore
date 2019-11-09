@@ -1,0 +1,7 @@
+# node_modules
+node_modules
+node_tchat.iml
+# .idea IDE 정보
+.idea
+# package-lock.json
+package-lock.json
