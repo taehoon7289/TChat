@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
     })
 })
 
-io.sockets.on('connection', (socket) => {
+io.on('connection', (socket) => {
     /* 새로운 유저가 접속했을 경우, 다른 소켓들에게 알려줌 */
     socket.on('newUser', (name) => {
         console.log(`${name} 님이 접속하였습니다.`)
@@ -49,6 +49,11 @@ io.sockets.on('connection', (socket) => {
         console.log(data)
         // 보낸 사람을 제외한 나머지 유저에게 메세지 전송
         socket.broadcast.emit('update', data)
+        // 메시지 전송한 유저에게 메세지 전송
+        socket.emit('update', {
+            name: '나',
+            message: data.message
+        })
     })
     /* 접속 종료 */
     socket.on('disconnect', () => {
@@ -63,7 +68,7 @@ io.sockets.on('connection', (socket) => {
 })
 
 /* 서버를 8080 포트로 listen */
-server.listen(80, () => {
+server.listen(8080, () => {
     console.log('서버 실행중...')
 })
 
